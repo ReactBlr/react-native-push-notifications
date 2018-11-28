@@ -1,5 +1,11 @@
 import React, { Component } from "react";
-import { Text, View, TouchableOpacity, AsyncStorage } from "react-native";
+import {
+  Text,
+  View,
+  TouchableOpacity,
+  AsyncStorage,
+  Platform
+} from "react-native";
 import { Notifications, Permissions } from "expo";
 
 export default class Notification extends Component {
@@ -31,8 +37,21 @@ export default class Notification extends Component {
 
   handleNotificationStatus = async () => {
     let token = await this.registerForPushNotification();
-    console.log(token);
     if (token) {
+      if (Platform.OS === "android") {
+        await Notifications.createChannelAndroidAsync("local", {
+          name: "Local",
+          sound: true,
+          priority: "max",
+          badge: true
+        });
+        await Notifications.createChannelAndroidAsync("remote", {
+          name: "Remote",
+          sound: true,
+          priority: "max",
+          badge: true
+        });
+      }
       await AsyncStorage.setItem("notificationStatus", "true");
     }
     this.goToHome();

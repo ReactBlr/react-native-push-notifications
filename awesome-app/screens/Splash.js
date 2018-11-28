@@ -1,6 +1,7 @@
 import React, { Component } from "react";
-import { Text, View, AsyncStorage } from "react-native";
+import { Text, View, AsyncStorage, Alert } from "react-native";
 import { StackActions } from "react-navigation";
+import { Notifications } from "expo";
 
 export default class Splash extends Component {
   static navigationOptions = {
@@ -9,16 +10,31 @@ export default class Splash extends Component {
 
   isUserLoggedIn = async () => {
     let userStatus = await AsyncStorage.getItem("userStatus");
-    console.log(userStatus);
     if (userStatus) {
       return this.props.navigation.navigate("Home");
     }
     return this.props.navigation.navigate("Auth");
   };
 
+  isOpenedByNotification = async () => {
+    if (this.props.screenProps.origin === null) {
+      this.isUserLoggedIn();
+    } else {
+      if (this.props.screenProps.routeName) {
+        this.props.navigation.navigate(
+          this.props.screenProps.routeName,
+          this.props.screenProps.data
+        );
+      } else {
+        this.isUserLoggedIn();
+      }
+    }
+    console.log(this.props.screenProps);
+  };
+
   componentDidMount = () => {
     setTimeout(() => {
-      this.isUserLoggedIn();
+      this.isOpenedByNotification();
     }, 2000);
   };
 
