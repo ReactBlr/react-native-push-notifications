@@ -1,5 +1,12 @@
 import React from "react";
-import { StyleSheet, Text, View, Alert, Platform } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Alert,
+  Platform,
+  AppState
+} from "react-native";
 import { Constants, Notifications } from "expo";
 import { NavigationActions } from "react-navigation";
 import AppContainer from "./screens";
@@ -9,7 +16,8 @@ export default class App extends React.Component {
     routeName: null,
     data: null,
     origin: null,
-    remote: null
+    remote: null,
+    shouldSplashHandleNotifications: true
   };
 
   constructor(props) {
@@ -31,19 +39,26 @@ export default class App extends React.Component {
   handlePushNotification = ({ data, origin, remote }) => {
     console.log(origin, data);
     if (origin === "selected") {
+      this.setState({
+        shouldSplashHandleNotifications: false
+      });
       // User opened the app via push
-      if (this.isFirstTime) {
-        this.isFirstTime = false;
-        this.setState({ routeName: data.goToPage, data, origin, remote });
-      } else {
-        this.navigator &&
-          this.navigator.dispatch(
-            NavigationActions.navigate({ routeName: data.goToPage, data })
-          );
-      }
+      this.navigator &&
+        this.navigator.dispatch(
+          NavigationActions.navigate({ routeName: data.goToPage, data })
+        );
+      // if (this.isFirstTime) {
+      //   this.isFirstTime = false;
+      //   this.setState({ routeName: data.goToPage, data, origin, remote });
+      // } else {
+      //   console.log("I am here");
+      //   this.navigator &&
+      //     this.navigator.dispatch(
+      //       NavigationActions.navigate({ routeName: data.goToPage, data })
+      //     );
+      // }
     } else if (origin === "received") {
       // App was open when notification was received
-      console.log("I am here");
       if (Platform.OS == "ios") {
         Alert.alert(
           "Notification clicked while app is opened",
@@ -81,7 +96,6 @@ export default class App extends React.Component {
 const styles = StyleSheet.create({
   container: {
     marginTop: Constants.statusBarHeight,
-    flex: 1,
-    backgroundColor: "#000"
+    flex: 1
   }
 });

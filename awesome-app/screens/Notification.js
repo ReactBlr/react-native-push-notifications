@@ -4,9 +4,10 @@ import {
   View,
   TouchableOpacity,
   AsyncStorage,
-  Platform
+  Platform,
+  StyleSheet
 } from "react-native";
-import { Notifications, Permissions } from "expo";
+import { Notifications, Permissions, LinearGradient } from "expo";
 import { request } from "graphql-request";
 
 export default class Notification extends Component {
@@ -53,6 +54,10 @@ export default class Notification extends Component {
           badge: true
         });
       }
+      const variables = {
+        token
+      };
+
       let mutation = `
         mutation createNotificationToken($token: String!){
           createNotificationToken(token: $token) {
@@ -60,10 +65,7 @@ export default class Notification extends Component {
           }
         }
       `;
-      const variables = {
-        token
-      };
-      await request("http://192.168.1.7:4000", mutation, variables);
+      await request("http://192.168.1.100:4000", mutation, variables);
       await AsyncStorage.setItem("notificationStatus", "true");
     }
     this.goToHome();
@@ -83,7 +85,6 @@ export default class Notification extends Component {
         </Text>
         <Text
           style={{
-            color: "#fff",
             fontSize: 36,
             textAlign: "center",
             margin: 30
@@ -93,7 +94,6 @@ export default class Notification extends Component {
         </Text>
         <Text
           style={{
-            color: "#fff",
             fontSize: 30,
             textAlign: "center",
             margin: 30
@@ -102,30 +102,45 @@ export default class Notification extends Component {
           Do you want me to notify 🔔 about new complaints?
         </Text>
         <TouchableOpacity
-          style={{
-            backgroundColor: "#00FFFF",
-            height: 60,
-            margin: 15,
-            alignItems: "center",
-            justifyContent: "center"
-          }}
+          style={styles.button}
           onPress={() => this.handleNotificationStatus()}
         >
-          <Text style={{ fontSize: 36 }}>Yes Pleeezz 😀</Text>
+          <LinearGradient
+            style={styles.gradient}
+            colors={["#14F1D9", "#3672F8"]}
+            start={{ x: 0, y: 0.5 }}
+            end={{ x: 1, y: 0.5 }}
+          >
+            <Text style={{ fontSize: 36, color: "#fff" }}>Yes Pleeezz 😀</Text>
+          </LinearGradient>
         </TouchableOpacity>
-        <TouchableOpacity
-          style={{
-            backgroundColor: "#00FFFF",
-            height: 60,
-            margin: 15,
-            alignItems: "center",
-            justifyContent: "center"
-          }}
-          onPress={() => this.goToHome()}
-        >
-          <Text style={{ fontSize: 36 }}>No 😭</Text>
+        <TouchableOpacity style={styles.button} onPress={() => this.goToHome()}>
+          <LinearGradient
+            style={styles.gradient}
+            colors={["#14F1D9", "#3672F8"]}
+            start={{ x: 0, y: 0.5 }}
+            end={{ x: 1, y: 0.5 }}
+          >
+            <Text style={{ fontSize: 36, color: "#fff" }}>No 😭</Text>
+          </LinearGradient>
         </TouchableOpacity>
       </View>
     );
   }
 }
+
+const styles = StyleSheet.create({
+  button: {
+    height: 60,
+    margin: 15,
+    alignItems: "center",
+    justifyContent: "center"
+  },
+  gradient: {
+    height: "100%",
+    width: "100%",
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: 50
+  }
+});

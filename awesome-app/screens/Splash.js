@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Text, View, AsyncStorage, Alert } from "react-native";
+import { Text, View, AsyncStorage, Alert, ImageBackground } from "react-native";
 import { StackActions } from "react-navigation";
 import { Notifications } from "expo";
 
@@ -17,19 +17,9 @@ export default class Splash extends Component {
   };
 
   isOpenedByNotification = async () => {
-    if (this.props.screenProps.origin === null) {
+    if (this.props.screenProps.shouldSplashHandleNotifications) {
       this.isUserLoggedIn();
-    } else {
-      if (this.props.screenProps.routeName) {
-        this.props.navigation.navigate(
-          this.props.screenProps.routeName,
-          this.props.screenProps.data
-        );
-      } else {
-        this.isUserLoggedIn();
-      }
     }
-    console.log(this.props.screenProps);
   };
 
   componentDidMount = () => {
@@ -40,19 +30,10 @@ export default class Splash extends Component {
 
   render() {
     return (
-      <View
-        style={{
-          flex: 1,
-          alignItems: "center",
-          justifyContent: "center",
-          borderWidth: 2
-        }}
-      >
-        <Text style={{ color: "#fff", fontSize: 36 }}>
-          {" "}
-          React.JS Bengaluru{" "}
-        </Text>
-      </View>
+      <ImageBackground
+        source={require("../assets/Splashx.png")}
+        style={{ width: "100%", height: "100%" }}
+      />
     );
   }
 }

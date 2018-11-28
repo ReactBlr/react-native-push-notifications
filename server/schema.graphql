@@ -2,6 +2,7 @@ type Query {
   sendNotificationToAll: Acknowldgement
   sendNotificationById(token: String!): pushNotifications
   sendNotificationByIdAndTimezone(token: String!): pushNotifications
+  pushNotifications(token: String!): pushNotifications
 }
 
 type Mutation {
@@ -14,6 +15,11 @@ type pushNotifications {
   platform: String
   timezoneOffset: Int
   receiveNotifications: Boolean!
+}
+
+type CreateNotificationToken {
+  pushNotifications: pushNotifications
+  alreadyExists: Boolean
 }
 
 type Acknowldgement {

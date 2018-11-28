@@ -59,10 +59,20 @@ const resolvers = {
     },
     sendNotificationByIdAndTimezone(parent, args, context) {
       return context.prisma.pushNotifications({ token: args.token });
+    },
+    pushNotifications(parent, args, context) {
+      return context.prisma.pushNotifications({ token: args.token });
     }
   },
   Mutation: {
-    createNotificationToken(parent, args, context) {
+    createNotificationToken: async (parent, args, context) => {
+      let isTokenStored = await context.prisma.pushNotifications({
+        token: args.token
+      });
+      console.log(isTokenStored);
+      if (isTokenStored) {
+        return isTokenStored;
+      }
       return context.prisma.createpushNotifications({
         token: args.token,
         platform: args.platform,

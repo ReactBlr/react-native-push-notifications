@@ -4,9 +4,12 @@ import {
   View,
   Dimensions,
   TouchableOpacity,
-  AsyncStorage
+  AsyncStorage,
+  StyleSheet,
+  Image,
+  ImageBackground
 } from "react-native";
-import { Notifications } from "expo";
+import { Notifications, LinearGradient } from "expo";
 
 const { height, width } = Dimensions.get("window");
 
@@ -24,85 +27,136 @@ export default class Home extends Component {
     return (
       <View
         style={{
-          backgroundColor: "#000",
           flex: 1
         }}
       >
         <View
           style={{
             alignItems: "center",
-            justifyContent: "space-around",
-            backgroundColor: "forestgreen",
-            flexDirection: "row"
+            justifyContent: "center",
+            flex: 1
           }}
         >
-          <Text style={{ color: "#fff", fontSize: 36 }}> 🌟 Dashboard 🌟 </Text>
+          <Text style={{ fontSize: 36 }}>🌟Dashboard🌟</Text>
+        </View>
+        <View
+          style={{
+            position: "absolute",
+            right: 0,
+            top: 15,
+            width: 55,
+            height: 50,
+            backgroundColor: "#5597FA",
+            alignItems: "flex-end",
+            borderTopLeftRadius: 25,
+            borderBottomLeftRadius: 25
+          }}
+        >
           <TouchableOpacity onPress={this.handleLogout}>
-            <Text style={{ color: "#fff", fontSize: 36 }}>⛔</Text>
+            <Text style={{ color: "#fff", fontSize: 36 }}>🔚</Text>
           </TouchableOpacity>
         </View>
         <View
           style={{
-            alignItems: "stretch"
+            flex: 1,
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "space-around"
           }}
         >
-          <View
-            style={{
-              backgroundColor: "darkred",
-              alignItems: "center",
-              justifyContent: "center",
-              padding: 10,
-              margin: 10
-            }}
-          >
-            <Text style={{ color: "#fff", fontSize: 24 }}>
-              Pending Cases 😴
-            </Text>
-            <Text style={{ color: "#fff", fontSize: 24 }}>12</Text>
+          <View style={{ alignItems: "center" }}>
+            <Text style={{ color: "#919191" }}>Pending Cases</Text>
+            <ImageBackground
+              source={require("../assets/pendingcase.png")}
+              style={{
+                height: 150,
+                width: 150,
+                alignItems: "center",
+                justifyContent: "center"
+              }}
+            >
+              <Text style={{ fontSize: 36, color: "#fff" }}>12</Text>
+            </ImageBackground>
           </View>
-          <View
-            style={{
-              backgroundColor: "teal",
-              alignItems: "center",
-              justifyContent: "center",
-              padding: 10,
-              margin: 10
-            }}
-          >
-            <Text style={{ color: "#fff", fontSize: 24 }}>
-              Completed Cases 🏆
-            </Text>
-            <Text style={{ color: "#fff", fontSize: 24 }}>100</Text>
-          </View>
-          <View
-            style={{
-              backgroundColor: "indigo",
-              alignItems: "center",
-              justifyContent: "center",
-              padding: 10,
-              margin: 10
-            }}
-          >
-            <Text style={{ color: "#fff", fontSize: 24 }}>
-              In Progress Cases 🏃‍♀️
-            </Text>
-            <Text style={{ color: "#fff", fontSize: 24 }}>1</Text>
+          <View style={{ alignItems: "center" }}>
+            <Text style={{ color: "#919191" }}>Completed Cases</Text>
+            <ImageBackground
+              source={require("../assets/successcase.png")}
+              style={{
+                height: 150,
+                width: 150,
+                alignItems: "center",
+                justifyContent: "center"
+              }}
+            >
+              <Text style={{ fontSize: 36, color: "#fff" }}>100</Text>
+            </ImageBackground>
           </View>
         </View>
-        <View style={{ flex: 1, justifyContent: "flex-end" }}>
+        <View style={{ flex: 1 }}>
+          <View style={{ alignItems: "center" }}>
+            <Text style={{ color: "#919191" }}>In Progress Cases</Text>
+            <ImageBackground
+              source={require("../assets/inprogress.png")}
+              resizeMode={"center"}
+              style={{
+                height: 150,
+                width: width,
+                alignItems: "center",
+                justifyContent: "center"
+              }}
+            >
+              <Text style={{ fontSize: 36, color: "#fff" }}>3</Text>
+            </ImageBackground>
+          </View>
+        </View>
+        <View style={{ flex: 1, justifyContent: "space-around" }}>
           <TouchableOpacity
-            style={{
-              backgroundColor: "#E67D27",
-              margin: 10,
-              padding: 10,
-              alignItems: "center"
-            }}
+            style={styles.button}
+            onPress={() => this.props.navigation.navigate("Settings")}
+          >
+            <LinearGradient
+              style={styles.gradient}
+              colors={["#14F1D9", "#3672F8"]}
+              start={{ x: 0, y: 0.5 }}
+              end={{ x: 1, y: 0.5 }}
+            >
+              <Text style={{ color: "#fff", fontSize: 36 }}>
+                Go To Settings
+              </Text>
+            </LinearGradient>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.button}
             onPress={() => this.props.navigation.navigate("Report")}
           >
-            <Text style={{ color: "#fff", fontSize: 36 }}>Create Report</Text>
+            <LinearGradient
+              style={styles.gradient}
+              colors={["#14F1D9", "#3672F8"]}
+              start={{ x: 0, y: 0.5 }}
+              end={{ x: 1, y: 0.5 }}
+            >
+              <Text style={{ color: "#fff", fontSize: 36 }}>Create Report</Text>
+            </LinearGradient>
           </TouchableOpacity>
         </View>
       </View>
     );
   }
 }
+
+const styles = StyleSheet.create({
+  gradient: {
+    height: "100%",
+    width: "100%",
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: 50
+  },
+  button: {
+    height: 60,
+    margin: 15,
+    alignItems: "center",
+    justifyContent: "center"
+  }
+});
