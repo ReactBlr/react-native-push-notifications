@@ -1,0 +1,21 @@
+type Query {
+  sendNotificationToAll: Acknowldgement
+  sendNotificationById(token: String!): pushNotifications
+  sendNotificationByIdAndTimezone(token: String!): pushNotifications
+}
+
+type Mutation {
+  createNotificationToken(token: String!): pushNotifications
+}
+
+type pushNotifications {
+  id: ID!
+  token: String!
+  platform: String
+  timezoneOffset: Int
+  receiveNotifications: Boolean!
+}
+
+type Acknowldgement {
+  done: Boolean!
+}

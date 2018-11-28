@@ -1,0 +1,7 @@
+type pushNotifications {
+  id: ID! @unique
+  token: String! @unique
+  platform: String
+  timezoneOffset: Int
+  receiveNotifications: Boolean! @default(value: "true")
+}

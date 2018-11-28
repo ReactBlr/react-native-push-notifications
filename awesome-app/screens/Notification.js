@@ -7,6 +7,7 @@ import {
   Platform
 } from "react-native";
 import { Notifications, Permissions } from "expo";
+import { request } from "graphql-request";
 
 export default class Notification extends Component {
   registerForPushNotification = async () => {
@@ -52,6 +53,17 @@ export default class Notification extends Component {
           badge: true
         });
       }
+      let mutation = `
+        mutation createNotificationToken($token: String!){
+          createNotificationToken(token: $token) {
+            id
+          }
+        }
+      `;
+      const variables = {
+        token
+      };
+      await request("http://192.168.1.7:4000", mutation, variables);
       await AsyncStorage.setItem("notificationStatus", "true");
     }
     this.goToHome();

@@ -1,0 +1,6 @@
+endpoint: https://eu1.prisma.sh/subramanya-chakravarthy-aa7caa/notifications/dev
+datamodel: datamodel.prisma
+
+generate:
+  - generator: typescript-client
+    output: ./generated/prisma-client/
