@@ -30,7 +30,7 @@ export default class Report extends Component {
         },
         data: {
           goToPage: "Stats",
-          secret: "Just Kidding! Better Luck Next Time"
+          secret: "You are on #1 position for this month"
         }
       },
       {
@@ -52,6 +52,9 @@ export default class Report extends Component {
         },
         ios: {
           sound: "default"
+        },
+        data: {
+          goToPage: "Home"
         }
       });
       this.scheduleNotification();

@@ -45,7 +45,7 @@ export default class App extends React.Component {
       // User opened the app via push
       this.navigator &&
         this.navigator.dispatch(
-          NavigationActions.navigate({ routeName: data.goToPage, data })
+          NavigationActions.navigate({ routeName: data.goToPage, params: data })
         );
       // if (this.isFirstTime) {
       //   this.isFirstTime = false;
