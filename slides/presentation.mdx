@@ -1,4 +1,4 @@
-import { Appear, Notes, Head } from "mdx-deck";
+import { Appear, Notes, Head, Code, Image } from "mdx-deck";
 import { Split, FullScreenCode } from "mdx-deck/layouts";
 import { CodeSurfer } from "mdx-deck-code-surfer";
 import prismTheme from "prism-react-renderer/themes/nightOwl";
@@ -14,13 +14,12 @@ export const theme = {
 
 <Head>
   <title>React native Notifications</title>
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" crossorigin="anonymous" />
+  <link
+    rel="stylesheet"
+    href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"
+    crossorigin="anonymous"
+  />
 </Head>
----
-
-# React Native Push Notifications 🎡
-
----
 
 Hello 👋
 
@@ -29,6 +28,10 @@ My name is **Subramanya Chakravarthy ([@chakrihacker](https://twitter.com/chakri
 Created [react-native-safe-mapview](https://github.com/chakrihacker/react-native-safe-mapview) **🌍**
 
 Software Developer **👨‍💻** @ Platify.co
+
+---
+
+# React Native Notifications 🎡
 
 ---
 
@@ -84,11 +87,12 @@ Software Developer **👨‍💻** @ Platify.co
 </div>
 
 <Notes>
-  There are couple of advantages
-  Retention - important aspect of every product. After an app is installed. It is important for a product or a company
-  to have that user continuing that app  
-  
-  Engagement - Like twitter, someone commented on your tweet and you may add another reply
+There are couple of advantages
+
+Retention - important aspect of every product. After an app is installed. It is important for a product or a company
+to have that user continuing that app
+
+Engagement - Like twitter, someone commented on your tweet and you may add another reply
 
 Get User's Attention - Notifications like your mind will blow away after watching this video
 
@@ -108,7 +112,7 @@ Get User's Attention - Notifications like your mind will blow away after watchin
     <h1>Some Numbers...</h1>
     <ul style={{ textAlign: "left", fontSize: "50px" }}>
       <Appear>
-        <li>31.84% of all Apps in Android app store include push</li>
+        <li>40.64% of all Apps in Android app store include push</li>
         <li>More than 50% of installed apps include push</li>
       </Appear>
     </ul>
@@ -134,20 +138,6 @@ Get User's Attention - Notifications like your mind will blow away after watchin
 
 ---
 
-# Few important things
-
-<ul style={{ textAlign: "left", fontSize: "50px" }}>
-  <Appear>
-    <li>Ask user for permission</li>
-    <li>Give Context why user should give permission</li>
-    <li>Capture Device token and platform</li>
-    <li>Preload Content via Push</li>
-    <li>Respect user timezone</li>
-  </Appear>
-</ul>
-
----
-
 ## Notification Types
 
 <ul style={{ fontSize: "50px" }}>
@@ -166,63 +156,6 @@ Get User's Attention - Notifications like your mind will blow away after watchin
 1. Identify the User
 2. Trigger notification from server/app
 3. Handle receiving notifications
-
----
-
-# App Flow
-
-```bash
-|-- Splash
-  |-- Auth
-    |-- Notification Permission
-  |-- Home
-    |-- Create Report
-```
-
----
-
-<CodeSurfer
-  code={require("!raw-loader!./src/snippets/registerNotification.js")}
-  theme={prismTheme}
-  lang={"javascript"}
-  showNumbers
-  steps={[
-    { title: "Get Token" },
-    { lines: [1], notes: "import required stuff" },
-    { lines: [3, 4] },
-    { ranges: [[13, 26]] },
-    { ranges: [[6, 11]], notes: "send the token to your server" }
-  ]}
-/>
-
----
-
-# Push Notifications Flow
-
-![Flow](./src/assets/push-notifications-flow.png)
-
----
-
-# Notification Providers
-
-<ul style={{ fontSize: "50px", textAlign: "left" }}>
-  <Appear>
-    <li>Expo (multiple server sdks)</li>
-    <li>One Signal (free, no privacy)</li>
-    <li>Firebase (free)</li>
-    <li>Amazon SNS (better for aws ecosystem devs)</li>
-    <li>Urban Airship</li>
-    <li>PushWoosh</li>
-  </Appear>
-</ul>
-
----
-
-export default Split;
-
-## How to implement with React Native
-
-![React Native](./src/assets/react-native.png)
 
 ---
 
@@ -271,6 +204,212 @@ export default Split;
     <p>Without Expo</p>
   </div>
 </div>
+
+---
+
+## If you dont' want to use expo
+
+<ul style={{ fontSize: "50px", textAlign: "left" }}>
+  <Appear>
+    <li>Expo (multiple server sdks)</li>
+    <li>One Signal (free, no privacy)</li>
+    <li>Firebase (free)</li>
+    <li>Amazon SNS (better for aws ecosystem devs)</li>
+    <li>Urban Airship</li>
+    <li>PushWoosh</li>
+  </Appear>
+</ul>
+
+---
+
+# Real World Scenario
+
+```bash
+|-- Splash
+  |-- Auth
+    |-- Notification Permission
+  |-- Home
+    |-- Create Report
+```
+
+---
+
+<CodeSurfer
+  code={require("!raw-loader!./src/snippets/registerNotification.js")}
+  theme={prismTheme}
+  lang={"javascript"}
+  showNumbers
+  steps={[
+    { title: "Get Token" },
+    { lines: [1], notes: "import required stuff" },
+    { lines: [3, 4] },
+    { ranges: [[13, 26]] },
+    { ranges: [[6, 11]], notes: "send the token to your server" }
+  ]}
+/>
+
+---
+
+# Demo
+
+---
+
+<CodeSurfer
+  code={require("!raw-loader!./src/snippets/handleNotification.js")}
+  theme={prismTheme}
+  lang={"javascript"}
+  showNumbers
+  steps={[{ title: "Handle received notifications" }]}
+/>
+
+---
+
+### Handle receiving and/or selecting the notification
+
+![notification](./src/assets/handling.png)
+
+---
+
+# Push Notifications Flow
+
+![Flow](./src/assets/push-notifications-flow.png)
+
+---
+
+### Call Expo's Push API with the user's token
+
+#### Send a POST request to https://exp.host/--/api/v2/push/send
+
+<div style={{"textAlign": "left"}}>
+accept: application/json  <br/>
+accept-encoding: gzip, deflate  <br/>
+Content-Type: application/json
+</div>
+---
+### Call Expo's Push API with the user's token
+
+```jsx
+const request = {
+  to: string, // Expo's Push Token
+  data?: Object, // A JSON delivered to your app
+  title?: string, // The title to display in the notification
+  body?: string, // The message to display in the notification
+  sound?: 'default' | null, // A sound to play when notification is received
+  ttl?: number, // Time to live: For redelivery, if not delivered. defaults to 0
+  expiration? number, // unix epoch timestamp when the message expires
+  priority?: 'default' | 'normal' | 'high', // delivery priority of the message
+  badge? number // number to display in the app icon
+};
+```
+
+---
+
+### Call Expo's Push API with the user's token
+
+```jsx
+[
+  {
+    to: "ExponentPushToken[xxxxxxxxxxxxxxxxxxxxxx]",
+    sound: "default",
+    body: "Hello world!"
+  },
+  {
+    to: "ExponentPushToken[yyyyyyyyyyyyyyyyyyyyyy]",
+    badge: 1,
+    body: "You've got mail"
+  }
+];
+```
+
+<Notes>This will return ids which can later be used to know the status</Notes>
+
+---
+
+### Call Expo's Push API with the user's token
+
+```jsx
+{
+  "data": [
+    {"status": "ok", "id": "XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"},
+    {"status": "ok", "id": "YYYYYYYY-YYYY-YYYY-YYYY-YYYYYYYYYYYY"}
+  ]
+}
+
+```
+
+---
+
+### Call Expo's Push API with the user's token
+
+```jsx
+{
+  "errors": [{
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "An unknown error occurred."
+  }]
+}
+
+```
+
+---
+
+<CodeSurfer
+  code={require("!raw-loader!./src/snippets/error.js")}
+  theme={prismTheme}
+  lang={"javascript"}
+  showNumbers
+  steps={[
+    { title: "Call Expo's Push API with the user's token" },
+    { lines: [6] }
+  ]}
+/>
+
+---
+
+### Call Expo's Push API with the user's token
+
+<div style={{ textAlign: "left" }}>
+  <h4>
+    <span style={{ color: "red" }}>DeviceNotRegistered:</span> the device cannot
+    receive push notifications
+  </h4>
+  <h4>
+    <span style={{ color: "red" }}>MesssageTooBig:</span> the total notification
+    payload was too large
+  </h4>
+  <h4>
+    <span style={{ color: "red" }}>MessageRateExceeded:</span> you are sending
+    messages too frequently to the given device
+  </h4>
+  <h4>
+    <span style={{ color: "red" }}>InvalidCredentials:</span> your push
+    notification credentials for your standalone app
+  </h4>
+</div>
+
+---
+
+### Expo Server SDK
+
+![Expo Server SDK](./src/assets/expo-server-sdk.png)
+
+---
+
+<Image src="./src/assets/push-notification-tool.png" />
+
+---
+
+# Few important things
+
+<ul style={{ textAlign: "left", fontSize: "50px" }}>
+  <Appear>
+    <li>Ask user for permission</li>
+    <li>Give Context why user should give permission</li>
+    <li>Capture Device token and platform</li>
+    <li>Preload Content via Push</li>
+    <li>Respect user timezone</li>
+  </Appear>
+</ul>
 
 ---
 
