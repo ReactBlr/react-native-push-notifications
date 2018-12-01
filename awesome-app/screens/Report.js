@@ -37,6 +37,9 @@ export default class Report extends Component {
         time: new Date().getTime() + 5000
       }
     );
+    setTimeout(() => {
+      Notifications.dismissAllNotificationsAsync();
+    }, 2500);
   };
 
   handleSubmitReport = async () => {

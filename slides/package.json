@@ -1,0 +1,15 @@
+{
+  "name": "notifications-slides",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "chakrihacker",
+  "license": "MIT",
+  "scripts": {
+    "start": "mdx-deck presentation.mdx"
+  },
+  "devDependencies": {
+    "mdx-deck": "^1.8.1",
+    "mdx-deck-code-surfer": "^0.5.3",
+    "raw-loader": "^0.5.1"
+  }
+}
